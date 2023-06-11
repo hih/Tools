@@ -14,6 +14,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+// Add Sidebar menu json file
+builder.Configuration.AddJsonFile("sidebar.json", optional: true, reloadOnChange: true);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

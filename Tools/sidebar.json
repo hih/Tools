@@ -1,0 +1,58 @@
+﻿{
+  "sidebarMenu": [
+    {
+      "text": "Main",
+      "is_header": true
+    },
+    {
+      "controller": "Home",
+      "action": "Index",
+      "icon": "bi bi-cpu",
+      "text": "Dashboard"
+    },
+    {
+      "controller": "Other",
+      "action": "Index",
+      "icon": "bi bi-bar-chart",
+      "text": "Menu item 2"
+    },
+    {
+      "is_divider": true
+    },
+    {
+      "text": "Tools",
+      "is_header": true
+    },
+    {
+      "controller": "Todo",
+      "action": "Index",
+      "icon": "bi bi-columns-gap",
+      "text": "Todo"
+    },
+    {
+      "is_divider": true
+    },
+    {
+      "text": "Users",
+      "is_header": true
+    },
+    {
+      "controller": "Profile",
+      "action": "Index",
+      "icon": "bi bi-people",
+      "text": "Profile"
+    },
+    {
+      "controller": "Settings",
+      "action": "Index",
+      "icon": "bi bi-gear",
+      "text": "Settings"
+    },
+    {
+      "controller": "Helper",
+      "action": "Index",
+      "icon": "bi bi-gem",
+      "text": "Helper"
+    }
+  ]
+}
