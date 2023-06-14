@@ -32,9 +32,24 @@ namespace Scraper.Utils
 			var jobTypeNode = htmlDoc.DocumentNode.SelectSingleNode(jobTypeXPath);
 			var companyNode = htmlDoc.DocumentNode.SelectSingleNode(companyXPath);
 
-			var salaryText = salaryNode.InnerText.Trim().Split(" - ");
-			var salaryFrom = Decimal.Parse(salaryText[0].Replace("&#163;", ""));
-			var salaryto = Decimal.Parse(salaryText[1].Replace("&#163;", "").Replace("per annum", "").Trim());
+			decimal salaryTo = 0;
+			decimal salaryFrom = 0;
+
+			if (salaryNode  != null)
+			{
+				// TODO: Upgrade to regex
+				var salaryText = salaryNode.InnerText.Trim().Split(" - ");
+				salaryFrom = Decimal.Parse(salaryText[0].Replace("&#163;", ""));
+				salaryTo = Decimal.Parse(salaryText[1]
+					.Replace("&#163;", "")
+					.Replace("per annum", "")
+					.Replace("Benefits 100% Remote (UK)", "")
+					.Replace(",", "").Trim());
+			}
+
+			var location = "";
+			if (locationNode != null)
+				location = locationNode.InnerText.Trim();
 
 			JobType jobType;
 
@@ -59,9 +74,9 @@ namespace Scraper.Utils
 			{
 				Position = positionNode.InnerText.Trim(),
 				Body = bodyNode.InnerText.Trim(),
-				Location = locationNode.InnerText.Trim(),
+				Location = location,
 				Company = companyNode.InnerText.Trim(),
-				SalaryTo = salaryto,
+				SalaryTo = salaryTo,
 				SalaryFrom = salaryFrom,
 				JobType = jobType,
 			};
