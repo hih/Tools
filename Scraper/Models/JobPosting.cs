@@ -17,6 +17,8 @@ namespace Scraper.Models
         public decimal SalaryTo { get; set; }
 
         public JobType JobType { get; set; }
+
+        public List<string> Keywords { get; set; }
     }
 
 	public enum JobType

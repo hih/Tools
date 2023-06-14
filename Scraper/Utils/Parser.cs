@@ -34,7 +34,7 @@ namespace Scraper.Utils
 
 			var salaryText = salaryNode.InnerText.Trim().Split(" - ");
 			var salaryFrom = Decimal.Parse(salaryText[0].Replace("&#163;", ""));
-			var salaryto = Decimal.Parse(salaryText[1].Replace("&#163;", ""));
+			var salaryto = Decimal.Parse(salaryText[1].Replace("&#163;", "").Replace("per annum", "").Trim());
 
 			JobType jobType;
 
