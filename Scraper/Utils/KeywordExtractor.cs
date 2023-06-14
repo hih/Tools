@@ -2,6 +2,7 @@
 {
 	public class KeywordExtractor
 	{
+		// TODO: NLP
 		private List<string> _keywords = new List<string>()
 		{
 			"C#", ".NET", "ASP.NET", "JavaScript", "React", "Angular", "SQL", "Python", "Java"
