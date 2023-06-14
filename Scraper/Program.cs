@@ -1,9 +1,4 @@
-﻿using HtmlAgilityPack;
-using Scraper.Models;
-using Scraper.Utils;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using Scraper.Utils;
 
 namespace Scraper
 {
@@ -15,6 +10,7 @@ namespace Scraper
 
 			var downloader = new Downloader();
 			var parser = new Parser();
+			var keywordExtractor = new KeywordExtractor();
 
 			string content = await downloader.DownloadPageAsync(url);
 
@@ -23,6 +19,8 @@ namespace Scraper
 				//Console.WriteLine(content.Substring(0, 100));
 
 				var jobPosting = parser.ParseJobPosting(content);
+				var keywords = keywordExtractor.ExtractKeywords(content);
+				var keywordString = string.Join(", ", keywords);
 
 				if (jobPosting != null)
 				{
@@ -33,6 +31,7 @@ namespace Scraper
 					Console.WriteLine($"SalaryFrom: {jobPosting.SalaryFrom}");
 					Console.WriteLine($"SalaryTo: {jobPosting.SalaryTo}");
 					Console.WriteLine($"JobType: {jobPosting.JobType}");
+					Console.WriteLine($"Keywords: {keywordString}");
 				}
 			}
 		}
