@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Scraper.Models;
-using Scraper.Utils;
 using System.Text.RegularExpressions;
+using Scraper.Services;
 
 namespace Scraper
 {

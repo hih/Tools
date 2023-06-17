@@ -1,4 +1,4 @@
-﻿namespace Scraper.Utils
+﻿namespace Scraper.Services
 {
     public class Downloader
     {
