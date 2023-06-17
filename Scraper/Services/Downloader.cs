@@ -1,6 +1,6 @@
 ﻿namespace Scraper.Services
 {
-    public class Downloader
+    public class Downloader : IDownloader
     {
         private HttpClient _client;
 

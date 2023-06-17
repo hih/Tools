@@ -3,7 +3,7 @@ using Scraper.Models;
 
 namespace Scraper.Services
 {
-	public class Parser
+	public class Parser : IParser
 	{
 		public JobPosting ParseJobPosting(string htmlContent)
 		{

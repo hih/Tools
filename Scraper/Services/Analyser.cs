@@ -2,7 +2,7 @@
 
 namespace Scraper.Services
 {
-	public class Analyser
+	public class Analyser : IAnalyser
 	{
 		public Dictionary<string, int> CountKeywordOccurrences(List<JobPosting> jobPostings)
 		{
