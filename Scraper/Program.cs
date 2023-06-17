@@ -44,8 +44,8 @@ namespace Scraper
 				if (jobPosting != null)
 				{
 					var keywords = keywordExtractor.ExtractKeywords(jobPosting.Body);
-					jobPosting.Keywords = keywords;
 
+					jobPosting.Keywords = keywords;
 					jobPostings.Add(jobPosting);
 
 					Console.WriteLine($"Position: {jobPosting.Position}");
@@ -60,13 +60,14 @@ namespace Scraper
 			}
 
 			var keywordCounts = analyser.CountKeywordOccurrences(jobPostings);
+
 			foreach (var keywordCount in keywordCounts)
 			{
 				Console.WriteLine($"Keyword {keywordCount.Key}: {keywordCount.Value}");
 			}
 
-			DateTime currentTime = DateTime.UtcNow;
-			long unixTime = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
+			var currentTime = DateTime.UtcNow;
+			var unixTime = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
 
 			dataStore.SaveToFile($"{dir}/Processed/{unixTime}.json", jobPostings);
 		}

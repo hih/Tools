@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Scraper.Services
+﻿namespace Scraper.Services
 {
 	public class Scheduler : IScheduler
 	{
@@ -28,10 +26,5 @@ namespace Scraper.Services
                 return _queue.Dequeue();
             return null;
         }
-
-		public void RemoveUrl(string url)
-		{
-			throw new NotImplementedException();
-		}
 	}
 }
