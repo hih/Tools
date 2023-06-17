@@ -44,7 +44,8 @@ namespace Scraper.Utils
 					.Replace("&#163;", "")
 					.Replace("per annum", "")
 					.Replace("Benefits 100% Remote (UK)", "")
-					.Replace(",", "").Trim());
+					.Replace(",", "")
+					.Trim());
 			}
 
 			var location = "";

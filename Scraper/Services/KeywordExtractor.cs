@@ -14,5 +14,4 @@
 			return _keywords.Where(keyword => text.Contains(keyword.ToLower())).ToList();
 		}
 	}
-
 }
