@@ -13,9 +13,9 @@ namespace Scraper
 			{
 				"https://www.totaljobs.com/job/net-developer/adria-solutions-job100571702?TemplateType=Standard",
 				"https://www.totaljobs.com/job/net-developer/reed-technology-job100612153",
-				"https://www.totaljobs.com/job/c-developer/exposed-solutions-job100610086",
-				"https://www.totaljobs.com/job/senior-c-net-developer/exposed-solutions-job100610068",
-				"https://www.totaljobs.com/job/remote-developer/exposed-solutions-job100610019"
+				//"https://www.totaljobs.com/job/c-developer/exposed-solutions-job100610086",
+				//"https://www.totaljobs.com/job/senior-c-net-developer/exposed-solutions-job100610068",
+				//"https://www.totaljobs.com/job/remote-developer/exposed-solutions-job100610019"
 			};
 
 			var pattern = ".*job(\\d+)";
@@ -25,6 +25,7 @@ namespace Scraper
 			var parser = new Parser();
 			var keywordExtractor = new KeywordExtractor();
 			var analyser = new Analyser();
+			var dataStore = new DataStore();
 
 			// TODO: Save to DB instead of to JSONs (or save to cloud storage)
 			string dir = "D:\\Programs\\Scraper\\Data";
@@ -38,8 +39,7 @@ namespace Scraper
 
 				if (content != null)
 				{
-					string rawJson = JsonConvert.SerializeObject(jobPostings, Newtonsoft.Json.Formatting.Indented);
-					File.WriteAllText($"{dir}/Raw/{id}.json", rawJson);
+					dataStore.SaveToFile($"{dir}/raw/{id}.json", jobPostings);
 
 					var jobPosting = parser.ParseJobPosting(content);
 					var keywords = keywordExtractor.ExtractKeywords(content);
@@ -73,8 +73,7 @@ namespace Scraper
 			DateTime currentTime = DateTime.UtcNow;
 			long unixTime = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
 
-			string processedJson = JsonConvert.SerializeObject(jobPostings, Newtonsoft.Json.Formatting.Indented);
-			File.WriteAllText($"{dir}/Processed/{unixTime}.json", processedJson);
+			dataStore.SaveToFile($"{dir}/Processed/{unixTime}.json", jobPostings);
 		}
 	}
 }
