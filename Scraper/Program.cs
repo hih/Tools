@@ -42,7 +42,7 @@ namespace Scraper
 				var jobPosting = parser.ParseJobPosting(content);
 
 				var id = rg.Matches(url)[0].Groups[1].Value;
-				dataStore.SaveToFile($"{dir}/raw/{id}.json", jobPosting);
+				dataStore.SaveToFile($"{dir}/raw/{id}.json", content);
 
 				if (jobPosting != null)
 				{
