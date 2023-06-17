@@ -17,12 +17,15 @@ namespace Scraper
 				//"https://www.totaljobs.com/job/remote-developer/exposed-solutions-job100610019"
 			};
 
-			var downloader = new Downloader();
-			var parser = new Parser();
-			var keywordExtractor = new KeywordExtractor();
-			var analyser = new Analyser();
-			var dataStore = new DataStore();
-			var scheduler = new Scheduler(urls);
+			var delay = TimeSpan.FromMilliseconds(300);
+
+			IThrottler throttler = new Throttler(delay);
+			IDownloader downloader = new Downloader(throttler);
+			IParser parser = new Parser();
+			IKeywordExtractor keywordExtractor = new KeywordExtractor();
+			IAnalyser analyser = new Analyser();
+			IDataStore dataStore = new DataStore();
+			IScheduler scheduler = new Scheduler(urls);
 
 			// TODO: Save to DB instead of to JSONs (or save to cloud storage)
 			string dir = "D:\\Programs\\Scraper\\Data";
