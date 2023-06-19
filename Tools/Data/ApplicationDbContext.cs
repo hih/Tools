@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Tools.Models;
 
 namespace Tools.Data
 {
@@ -9,5 +10,6 @@ namespace Tools.Data
             : base(options)
         {
         }
+        public DbSet<Tools.Models.Location> Location { get; set; } = default!;
     }
 }
