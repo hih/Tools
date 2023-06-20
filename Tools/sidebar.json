@@ -20,6 +20,28 @@
       "is_divider": true
     },
     {
+      "text": "Locations",
+      "is_header": true
+    },
+    {
+      "controller": "Locations",
+      "action": "View",
+      "icon": "bi bi-columns-gap",
+      "text": "View"
+    },
+    {
+      "controller": "Locations",
+      "action": "Index",
+      "icon": "bi bi-columns-gap",
+      "text": "Index"
+    },
+    {
+      "controller": "Locations",
+      "action": "Create",
+      "icon": "bi bi-columns-gap",
+      "text": "Create"
+    },
+    {
       "text": "Tools",
       "is_header": true
     },
