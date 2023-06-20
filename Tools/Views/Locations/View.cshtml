@@ -15,8 +15,7 @@
 		<div class="card mb-3">
 			<div class="card-body">
 				<div class="d-flex fw-bold small mb-3">
-					<span class="flex-grow-1">Map</span>
-					<a href="#" data-toggle="card-expand" class="text-inverse text-opacity-50 text-decoration-none"><i class="bi bi-fullscreen"></i></a>
+					<span class="flex-grow-1">MAP</span>
 				</div>
 
 				<div class="row align-items-center mb-2">
@@ -41,19 +40,17 @@
 		<div class="card mb-3">
 			<div class="card-body">
 				<div class="d-flex fw-bold small mb-3">
-					<span class="flex-grow-1">Data Entry</span>
-					<a href="#" data-toggle="card-expand" class="text-inverse text-opacity-50 text-decoration-none"><i class="bi bi-fullscreen"></i></a>
+					<span class="flex-grow-1">LOCATIONS</span>
 				</div>
 
 				<div class="row align-items-center mb-2">
-					<div class="col-9">
-						<div class="row align-items-center mb-2">
-							<div style="height: 500px" class="col-xl-12" id="map"></div>
-						</div>
-					</div>
-					<div class="col-3">
-						<div class="row mb-2">
-						</div>
+					<div class="card-body">
+						@foreach (var location in Model.Locations)
+						{
+							<p>
+								<span class="flex-grow-1">ID: @location.ID | Name: @location.Name</span>
+							</p>
+						}
 					</div>
 				</div>
 			</div>
@@ -66,21 +63,15 @@
 			</div>
 		</div>
 	</div>
+	
+	
 </div>
-
-@*
-<form asp-action="Create" asp-controller="Locations" method="post">
-    <input asp-for="Name" required />
-    <input asp-for="Latitude" type="number" step="any" required />
-    <input asp-for="Longitude" type="number" step="any" required />
-    <button type="submit">Add location</button>
-</form>
-*@
 
 <!-- Google Maps JavaScript API -->
 <script src="https://maps.googleapis.com/maps/api/js?key=@apiKey&callback=initMap" async defer></script>
 
 <script>
+
     function initMap() {
         const map = new google.maps.Map(document.getElementById('map'), {
             zoom: 15,
@@ -93,7 +84,12 @@
 				new google.maps.Marker({
 					position: { lat: @location.Latitude, lng: @location.Longitude },
 					map: map,
-					title: '@location.Name'
+					title: '@location.Name',
+
+					label: {
+						color: '#000', fontSize: '12px', fontWeight: '600',
+						text: '@location.ID'
+					}
 				});
 			</text>
 		}
