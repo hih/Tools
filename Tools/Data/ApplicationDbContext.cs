@@ -10,6 +10,6 @@ namespace Tools.Data
             : base(options)
         {
         }
-        public DbSet<Tools.Models.Location> Location { get; set; } = default!;
+        public DbSet<Tools.Models.Locations> Locations { get; set; } = default!;
     }
 }
