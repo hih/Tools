@@ -15,9 +15,15 @@ public class LocationsController : Controller
 	{
 		var locations = _context.Locations.ToList();
 		return View(locations);
-	}
+    }
 
-	public IActionResult Create(Locations locations)
+    public IActionResult View()
+    {
+        var locations = _context.Locations.ToList();
+        return View(locations);
+    }
+
+    public IActionResult Create(Locations locations)
 	{
 		if (ModelState.IsValid)
 		{
