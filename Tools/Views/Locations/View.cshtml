@@ -64,7 +64,52 @@
 		</div>
 	</div>
 	
-	
+	<div class="col-xl-3 col-lg-3">
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="d-flex fw-bold small mb-3">
+					<span class="flex-grow-1">DATA ENTRY</span>
+				</div>
+
+				<div class="row align-items-center mb-2">
+					<div class="card-body">
+						<form asp-controller="Locations" asp-action="Create" method="post">
+							<table class="w-100 small mb-0 text-inverse text-opacity-60">
+								<tr>
+									<td><label for="Name">Name:</label></td>
+									<td><input id="Name" name="Name" type="text" required /></td>
+								</tr>
+
+								<tr>
+									<td><label for="Latitude">Latitude:</label></td>
+									<td><input id="Latitude" name="Latitude" type="number" step="any" required /></td>
+								</tr>
+
+								<tr>
+									<td><label for="Longitude">Longitude:</label></td>
+									<td><input id="Longitude" name="Longitude" type="number" step="any" required /></td>
+								</tr>
+								<tr>
+									<td><p></p></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td class=""><button type="submit">Add location</button></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-arrow">
+				<div class="card-arrow-top-left"></div>
+				<div class="card-arrow-top-right"></div>
+				<div class="card-arrow-bottom-left"></div>
+				<div class="card-arrow-bottom-right"></div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Google Maps JavaScript API -->
