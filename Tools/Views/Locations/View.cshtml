@@ -1,7 +1,9 @@
-﻿@model IEnumerable<Tools.Models.Locations>
+﻿@model Tools.Models.LocationsViewModel
 
 @{
-    ViewData["Title"] = "View";
+	ViewData["Title"] = "View";
+
+	var apiKey = @Model.ApiKey;
 }
 
 <div class="text-center pb-4">
@@ -76,7 +78,7 @@
 *@
 
 <!-- Google Maps JavaScript API -->
-<script src="https://maps.googleapis.com/maps/api/js?key=APIKey&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=@apiKey&callback=initMap" async defer></script>
 
 <script>
     function initMap() {
@@ -85,7 +87,7 @@
             center: { lat: 50.8119188, lng: -0.5057848 }
         });
 
-		@foreach (var location in Model)
+		@foreach (var location in Model.Locations)
 		{
 			<text>
 				new google.maps.Marker({
