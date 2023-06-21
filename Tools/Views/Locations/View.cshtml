@@ -4,6 +4,13 @@
 	ViewData["Title"] = "View";
 
 	var apiKey = @Model.ApiKey;
+
+	var allLocs = Model.Locations.ToList();
+	var count = allLocs.Count();
+
+	var n = 12;
+
+	var locations = allLocs.Skip(Math.Max(0, allLocs.Count() - n));
 }
 
 <div class="text-center pb-4">
@@ -55,13 +62,13 @@
 								</tr>
 							</thead>
 							<tbody class="table-striped">
-								@foreach (var location in Model.Locations)
+								@foreach (var location in locations)
 								{
 									<tr>
 										<td><span class="flex-grow-1">@location.ID</span></td>
-										<td><span class="flex-grow-1">@location.Name</span></td>
-										<td><span class="flex-grow-1">@location.Latitude</span></td>
-										<td><span class="flex-grow-1">@location.Longitude</span></td>
+										<td><span class="flex-grow-1">@LimitString(location.Name, 40)</span></td>
+										<td><span class="flex-grow-1">@LimitDouble(location.Latitude, 9)</span></td>
+										<td><span class="flex-grow-1">@LimitDouble(location.Longitude, 9)</span></td>
 									</tr>
 								}
 							</tbody>
@@ -78,6 +85,21 @@
 			</div>
 		</div>
 	</div>
+
+	@{
+		string LimitDouble(double latlng, int limit)
+		{
+			var latStr = latlng.ToString();
+			return LimitString(latStr, limit);
+		}
+
+		string LimitString(string str, int limit)
+		{
+			if (str.Count() >= limit)
+				return str.Substring(0, limit) + "...";
+			return str;
+		}
+	}
 	
 	<div class="col-xl-3 col-lg-3">
 		<div class="card mb-3">
@@ -88,7 +110,7 @@
 
 				<div class="row align-items-center">
 					<div class="card-body">
-						<form asp-controller="Locations" asp-action="Create" method="post">
+						<form asp-controller="Locations" asp-action="Create" method="get">
 							<table class="w-100 small mb-0 text-inverse text-opacity-60">
 								<tbody class="table-striped">
 									<tr>
@@ -127,15 +149,61 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="col-xl-3 col-lg-3">
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="d-flex fw-bold small mb-3">
+					<span class="flex-grow-1">SEARCH FOR LOCATION</span>
+				</div>
+
+				<div class="row align-items-center">
+					<div class="card-body">
+						<form onsubmit="return false;">
+							<table class="w-100 small mb-0 text-inverse text-opacity-60">
+								<tbody class="table-striped">
+									<tr>
+										<td><label for="Address">Address:</label></td>
+										<td><input id="Address" name="Address" type="text" required /></td>
+									</tr>
+
+									<tr>
+										<td><p></p></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td class=""><button id="Search" type="button">Serach</button></td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-arrow">
+				<div class="card-arrow-top-left"></div>
+				<div class="card-arrow-top-right"></div>
+				<div class="card-arrow-bottom-left"></div>
+				<div class="card-arrow-bottom-right"></div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Google Maps JavaScript API -->
-<script src="https://maps.googleapis.com/maps/api/js?key=@apiKey&callback=initMap" async defer></script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=@apiKey&callback=initMap&libraries=places" async defer></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
+	var map;
+	let service;
+	let infowindow;
 
-    function initMap() {
-        const map = new google.maps.Map(document.getElementById('map'), {
+	function initMap() {
+
+		infowindow = new google.maps.InfoWindow();
+
+        map = new google.maps.Map(document.getElementById('map'), {
             zoom: 15,
             center: { lat: 50.8119188, lng: -0.5057848 }
         });
@@ -156,4 +224,57 @@
 			</text>
 		}
     }
+
+	$(document).ready(function () {
+		$("#Search").on("click", function () {
+			const address = $("#Address");
+			const lat = $("#Latitude");
+			const long = $("#Longitude");
+			
+			lat.val("");
+			long.val("");
+
+			const request = {
+				query: address.val(),
+				fields: ["name", "geometry"],
+			};
+
+			service = new google.maps.places.PlacesService(map);
+			service.findPlaceFromQuery(request, (results, status) => {
+				if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+					for (let i = 0; i < results.length; i++) {
+						createMarker(results[i]);
+					}
+
+					map.setCenter(results[0].geometry.location);
+
+					lat.val(results[0].geometry.location.lat());
+					long.val(results[0].geometry.location.lng());
+				}
+			});
+
+			address.val("");
+		});
+
+		$("#Address").on('keyup', function (event) {
+			if (event.key === "Enter") {
+				$("#Search").trigger("click");
+				event.preventDefault();
+			}
+		});
+	});
+
+	function createMarker(place) {
+		if (!place.geometry || !place.geometry.location) return;
+
+		const marker = new google.maps.Marker({
+			map,
+			position: place.geometry.location,
+		});
+
+		google.maps.event.addListener(marker, "click", () => {
+			infowindow.setContent(place.name || "");
+			infowindow.open(map);
+		});
+	}
 </script>
