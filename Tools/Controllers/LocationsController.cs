@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
 using Tools.Data;
 using Tools.Models;
 
 public class LocationsController : Controller
 {
 	private readonly ApplicationDbContext _context;
+
 	private readonly IConfiguration _configuration;
 
 	public LocationsController(
@@ -46,7 +46,7 @@ public class LocationsController : Controller
 			_context.Locations.Add(locations);
 			_context.SaveChanges();
 
-			return RedirectToAction(nameof(Index));
+			return RedirectToAction("View");
 		}
 
 		return View(locations);
@@ -101,6 +101,43 @@ public class LocationsController : Controller
 			return RedirectToAction(nameof(Index));
 		}
 		return View(locations);
+	}
+
+	// GET: Locations/Delete/5
+	public async Task<IActionResult> Delete(int? id)
+	{
+		if (id == null || _context.Locations == null)
+		{
+			return NotFound();
+		}
+
+		var location = await _context.Locations
+			.FirstOrDefaultAsync(m => m.ID == id);
+		if (location == null)
+		{
+			return NotFound();
+		}
+
+		return View(location);
+	}
+
+	// POST: Locations/Delete/5
+	[HttpPost, ActionName("Delete")]
+	[ValidateAntiForgeryToken]
+	public async Task<IActionResult> DeleteConfirmed(int id)
+	{
+		if (_context.Locations == null)
+		{
+			return Problem("Entity set 'ApplicationDbContext.Location'  is null.");
+		}
+		var location = await _context.Locations.FindAsync(id);
+		if (location != null)
+		{
+			_context.Locations.Remove(location);
+		}
+
+		await _context.SaveChangesAsync();
+		return RedirectToAction(nameof(Index));
 	}
 
 	private bool LocationExists(int id)
