@@ -172,7 +172,7 @@
 									</tr>
 									<tr>
 										<td></td>
-										<td class=""><button id="Search" type="button">Serach</button></td>
+										<td class=""><button id="Search" type="button">Search</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -250,6 +250,8 @@
 
 					lat.val(results[0].geometry.location.lat());
 					long.val(results[0].geometry.location.lng());
+					
+					$("#Name").val(results[0].name);
 				}
 			});
 
