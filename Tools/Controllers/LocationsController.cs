@@ -22,7 +22,7 @@ public class LocationsController : Controller
 	{
 		int pageNumber = id ?? 1;
 
-		var locations = _context.Locations.OrderByDescending(x => x.ID);
+		var locations = _context.Locations.OrderBy(x => x.ID);
 
 		int pageSize = 15;
 
@@ -56,7 +56,6 @@ public class LocationsController : Controller
 			if (currentPage > halfWay)
 			{
 				paginationMin = paginationMin - difference;
-				//paginationMax--;
 			} 
 			else
 			{
