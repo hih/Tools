@@ -18,10 +18,66 @@ public class LocationsController : Controller
 		_configuration = configuration;
 	}
 
-	public IActionResult Index()
+	public IActionResult Index(int? id)
 	{
-		var locations = _context.Locations.ToList();
-		return View(locations);
+		int pageNumber = id ?? 1;
+
+		var locations = _context.Locations.OrderByDescending(x => x.ID);
+
+		int pageSize = 15;
+
+		int totalResults = locations.Count();
+		int totalPages = (totalResults / pageSize) + 1;
+
+		int currentPage = pageNumber != 0 ? pageNumber : 1;
+		int currentPageIndex = currentPage - 1;
+
+		int showingX = currentPageIndex * pageSize;
+		int showingY = showingX + pageSize;
+
+		if (showingY > totalResults)
+			showingY = totalResults;
+
+		int maxPagesToShow = 5;
+		int pagesToShow = totalPages < maxPagesToShow ? totalPages : maxPagesToShow;
+
+		var locationsToShow = locations.Skip(showingX).Take(pageSize);
+
+		int paginationMax = currentPage < totalPages - 2 ? currentPageIndex + 3 : totalPages;
+		int paginationMin = currentPage > 3 ? currentPageIndex - 2 : 0;
+
+		int halfWay = totalPages / 2;
+
+		int pages = paginationMax - paginationMin;
+
+		if (pages <= maxPagesToShow)
+		{
+			int difference = maxPagesToShow - pages;
+			if (currentPage > halfWay)
+			{
+				paginationMin = paginationMin - difference;
+				//paginationMax--;
+			} 
+			else
+			{
+				paginationMax = paginationMax + difference;
+			}
+		}
+
+		var model = new LocationsIndexModel()
+		{
+			Locations = locationsToShow,
+			PageNumber = pageNumber,
+			ShowingX = showingX,
+			ShowingY = showingY,
+			PagesToShow = pagesToShow,
+			TotalResults = totalResults,
+			TotalPages = totalPages,
+			PaginationMin = paginationMin,
+			PaginationMax = paginationMax,
+		};
+
+		return View(model);
     }
 
     public new IActionResult View()
@@ -33,7 +89,7 @@ public class LocationsController : Controller
 		var model = new LocationsViewModel()
 		{
 			Locations = locations,
-			ApiKey = googleMapsApiKey
+			ApiKey = googleMapsApiKey,
 		};
 
         return View(model);
@@ -50,6 +106,24 @@ public class LocationsController : Controller
 		}
 
 		return View(locations);
+	}
+
+	// GET: Locations/Details/5
+	public async Task<IActionResult> Details(int? id)
+	{
+		if (id == null || _context.Locations == null)
+		{
+			return NotFound();
+		}
+
+		var location = await _context.Locations
+			.FirstOrDefaultAsync(m => m.ID == id);
+		if (location == null)
+		{
+			return NotFound();
+		}
+
+		return View(location);
 	}
 
 	// GET: Locations/Edit/5

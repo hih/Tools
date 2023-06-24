@@ -1,48 +1,133 @@
-﻿@model IEnumerable<Tools.Models.Locations>
+﻿@model Tools.Models.LocationsIndexModel;
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
+
+	string strSpacer = "&nbsp;&nbsp;";
 }
 
-<h1>Index</h1>
+@{
+	string LimitDouble(double latlng, int limit)
+	{
+		var latStr = latlng.ToString();
+		return LimitString(latStr, limit);
+	}
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Latitude)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Longitude)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Latitude)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Longitude)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+	string LimitString(string str, int limit)
+	{
+		if (str.Count() >= limit)
+			return str.Substring(0, limit-3) + "...";
+		return str;
+	}
+}
+
+<div class="d-flex align-items-center mb-3">
+    <div>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">PAGES</a></li>
+            <li class="breadcrumb-item active">LOCATIONS</li>
+        </ul>
+		<h1 class="page-header mb-0">LOCATIONS</h1>
+    </div>
+
+    <div class="ms-auto">
+        <a href="/Locations/Create" class="btn btn-outline-theme"><i class="fa fa-plus-circle fa-fw me-1"></i> Add Location</a>
+    </div>
+</div>
+
+<div class="card">
+	<ul class="nav nav-tabs nav-tabs-v2 px-4">
+		<li class="nav-item me-3"><a href="#allTab" class="nav-link active px-2" data-bs-toggle="tab">All</a></li>
+		<li class="nav-item me-3"><a href="#publishedTab" class="nav-link px-2" data-bs-toggle="tab">Published</a></li>
+		<li class="nav-item me-3"><a href="#expiredTab" class="nav-link px-2" data-bs-toggle="tab">Expired</a></li>
+		<li class="nav-item me-3"><a href="#deletedTab" class="nav-link px-2" data-bs-toggle="tab">Deleted</a></li>
+	</ul>
+	<div class="tab-content p-4">
+		<div class="tab-pane fade show active" id="allTab">
+			<!-- BEGIN table -->
+			<div class="table-responsive">
+				<table class="table table-hover text-nowrap">
+					<thead>
+						<tr>
+							<th class="">
+								<input type="checkbox" class="form-check-input" id="allLocations">
+							</th>
+							<th class="pt-0 pb-2">Location</th>
+							<th class="pt-0 pb-2">Latitude</th>
+							<th class="pt-0 pb-2">Longitude</th>
+							<th class="pt-0 pb-2">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model.Locations)
+						{
+							<tr>
+								<td>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="location1">
+										<label class="form-check-label" for="location1"></label>
+									</div>
+								</td>
+
+								<td>
+									@LimitString(item.Name, 40)
+								</td>
+								<td>
+									@LimitDouble(item.Latitude, 12)
+								</td>
+								<td>
+									@LimitDouble(item.Longitude, 12)
+								</td>
+								<td>
+									<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+									<a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+									<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+			<!-- END table -->
+
+			<div class="d-md-flex align-items-center">
+				<div class="me-md-auto text-md-left text-center mb-2 mb-md-0">
+					Showing @Model.ShowingX to @Model.ShowingY of @Model.TotalResults entries
+				</div>
+				<ul class="pagination mb-0 justify-content-center">
+					@{
+						var classes = "page-item";
+
+						var prevClass = Model.PageNumber == 1 ? classes + " disabled" : classes;
+						var nextClass = Model.PageNumber == Model.TotalPages ? classes + " disabled" : classes;
+
+						string GetLink(int pageNumber)
+						{
+							return $"/Locations/Index/{pageNumber}";
+						}
+					}
+
+					<li class="@prevClass"><a class="page-link" href="@GetLink(Model.PageNumber - 1)">Previous</a></li>
+					@{
+						for (int x = Model.PaginationMin; x < Model.PaginationMax; x++)
+						{
+							var pageNum = x + 1;
+
+							var pageClass = Model.PageNumber == pageNum ? classes + " active" : classes;
+
+							<li class="@pageClass"><a class="page-link" href="/Locations/Index/@pageNum">@pageNum</a></li>
+						}
+					}
+					<li class="@nextClass"><a class="page-link" href="@GetLink(Model.PageNumber + 1)">Next</a></li>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card-arrow">
+		<div class="card-arrow-top-left"></div>
+		<div class="card-arrow-top-right"></div>
+		<div class="card-arrow-bottom-left"></div>
+		<div class="card-arrow-bottom-right"></div>
+	</div>
+</div>
