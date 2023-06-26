@@ -52,6 +52,7 @@
 							<th class="">
 								<input type="checkbox" class="form-check-input" id="allLocations">
 							</th>
+							<th class="pt-0 pb-2">ID</th>
 							<th class="pt-0 pb-2">Location</th>
 							<th class="pt-0 pb-2">Latitude</th>
 							<th class="pt-0 pb-2">Longitude</th>
@@ -69,6 +70,9 @@
 									</div>
 								</td>
 
+								<td>
+									@item.ID
+								</td>
 								<td>
 									@LimitString(item.Name, 40)
 								</td>
