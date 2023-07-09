@@ -111,7 +111,7 @@
 						}
 					}
 
-					<li class="@classes"><a class="page-link" href="@GetLink(1)">First</a></li>
+					<li class="@prevClass"><a class="page-link" href="@GetLink(1)">First</a></li>
 					<li class="@prevClass"><a class="page-link" href="@GetLink(Model.PageNumber - 1)">Previous</a></li>
 					@{
 						for (int x = Model.PaginationMin; x < Model.PaginationMax; x++)
@@ -124,7 +124,7 @@
 						}
 					}
 					<li class="@nextClass"><a class="page-link" href="@GetLink(Model.PageNumber + 1)">Next</a></li>
-					<li class="@classes"><a class="page-link" href="@GetLink(Model.TotalPages)">Last</a></li>
+					<li class="@nextClass"><a class="page-link" href="@GetLink(Model.TotalPages)">Last</a></li>
 				</ul>
 			</div>
 		</div>
