@@ -9,7 +9,8 @@ namespace Tools.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-        }
-        public DbSet<Tools.Models.Locations> Locations { get; set; } = default!;
-    }
+		}
+		public DbSet<Tools.Models.Locations> Locations { get; set; } = default!;
+		public DbSet<Tools.Models.LocationType> LocationType { get; set; }
+	}
 }

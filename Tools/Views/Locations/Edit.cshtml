@@ -29,6 +29,11 @@
                 <span asp-validation-for="Longitude" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="LocationTypeID" class="control-label">Location Type ID</label>
+                <input asp-for="LocationTypeID" class="form-control" />
+                <span asp-validation-for="LocationTypeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
