@@ -42,6 +42,22 @@
       "text": "Create"
     },
     {
+      "text": "Location Types",
+      "is_header": true
+    },
+    {
+      "controller": "LocationTypes",
+      "action": "Index",
+      "icon": "bi bi-columns-gap",
+      "text": "Index"
+    },
+    {
+      "controller": "LocationTypes",
+      "action": "Create",
+      "icon": "bi bi-columns-gap",
+      "text": "Create"
+    },
+    {
       "text": "Tools",
       "is_header": true
     },
