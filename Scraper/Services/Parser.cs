@@ -1,9 +1,10 @@
 ﻿using HtmlAgilityPack;
 using Scraper.Models;
+using Scraper.Services.Interfaces;
 
 namespace Scraper.Services
 {
-	public class Parser : IParser
+    public class Parser : IParser
 	{
 		public JobPosting ParseJobPosting(string htmlContent)
 		{

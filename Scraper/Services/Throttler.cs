@@ -1,6 +1,8 @@
-﻿namespace Scraper.Services
+﻿using Scraper.Services.Interfaces;
+
+namespace Scraper.Services
 {
-	public class Throttler : IThrottler
+    public class Throttler : IThrottler
 	{
 		private readonly TimeSpan _delay;
 

@@ -1,6 +1,8 @@
-﻿namespace Scraper.Services
+﻿using Scraper.Services.Interfaces;
+
+namespace Scraper.Services
 {
-	public class KeywordExtractor : IKeywordExtractor
+    public class KeywordExtractor : IKeywordExtractor
 	{
 		// TODO: NLP
 		private List<string> _keywords = new List<string>()

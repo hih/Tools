@@ -1,6 +1,8 @@
-﻿namespace Scraper.Services
+﻿using Scraper.Services.Interfaces;
+
+namespace Scraper.Services
 {
-	public class Scheduler : IScheduler
+    public class Scheduler : IScheduler
 	{
 		private readonly Queue<string> _queue;
 

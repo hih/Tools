@@ -1,4 +1,6 @@
-﻿namespace Scraper.Services
+﻿using Scraper.Services.Interfaces;
+
+namespace Scraper.Services
 {
     public class Downloader : IDownloader
     {

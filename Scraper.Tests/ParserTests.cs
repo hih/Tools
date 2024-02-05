@@ -1,12 +1,13 @@
 using Scraper.Models;
 using Scraper.Services;
+using Scraper.Services.Interfaces;
 using System;
 using System.Runtime.CompilerServices;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Scraper.Tests
 {
-	public class ParserTests
+    public class ParserTests
 	{
 		private IParser _parser;
 		private JobPosting _jobPosting;

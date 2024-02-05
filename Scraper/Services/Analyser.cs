@@ -1,8 +1,9 @@
 ﻿using Scraper.Models;
+using Scraper.Services.Interfaces;
 
 namespace Scraper.Services
 {
-	public class Analyser : IAnalyser
+    public class Analyser : IAnalyser
 	{
 		public Dictionary<string, int> CountKeywordOccurrences(List<JobPosting> jobPostings)
 		{

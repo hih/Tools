@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Scraper.Services.Interfaces;
 
 namespace Scraper.Services
 {
-	public class DataStore : IDataStore
+    public class DataStore : IDataStore
 	{
 		private readonly JsonSerializerSettings _settings;
 

@@ -1,10 +1,11 @@
 ﻿using Scraper.Models;
 using System.Text.RegularExpressions;
 using Scraper.Services;
+using Scraper.Services.Interfaces;
 
 namespace Scraper
 {
-	class Program
+    class Program
 	{
         static async Task Main(string[] args)
 		{
